@@ -58,7 +58,8 @@ export const createServer = (config) => {
 
   app.use(express.static('public'))
   app.use('/api/v0/posts', require('./api/posts'))
-
+  app.use('/api/v0/genres', require('./api/genres'))
+  app.use('/api/v0/films', require('./api/films'))
 
   app.get('*', (req, res) => {
     const store = configureStore({
@@ -103,7 +104,7 @@ export const createServer = (config) => {
           )
 
           // just call html = ReactDOM.renderToString(InitialView)
-          // to if you don't want Aphrodite. Also change renderFullPage
+          // if you don't want Aphrodite. Also change renderFullPage
           // accordingly
           const data = StyleSheetServer.renderStatic(
             () => ReactDOM.renderToString(InitialView)
@@ -118,41 +119,24 @@ export const createServer = (config) => {
                 ${head.title.toString()}
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <link rel="shortcut icon" href="/favicon.ico">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
                 ${head.meta.toString()}
                 ${head.link.toString()}
+                <!--<style data-aphrodite>${data.css.content}</style>-->
                 <style>
-                  html {
-                    box-sizing: border-box
+                  html, body{
+                    padding: 0px;
+                    margin: 0px;
                   }
-
-                  *,
-                  *::before,
-                  *::after {
-                    box-sizing: border-box
-                  }
-
-                  html {
-                    font-size: 100%;
-                    -ms-overflow-style: scrollbar;
-                    -webkit-tap-highlight-color: rgba(0,0,0,0);
+                  html{
                     height: 100%;
                   }
-
-                  body {
-                    font-size: 1rem;
-                    background-color: #fff;
-                    color: #555;
-                    -webkit-font-smoothing: antialiased;
-                    -moz-osx-font-smoothing: grayscale;
-                    font-family: -apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;
-                  }
-
-                  h1,h2,h3,h4,h5,h6 {
-                    margin: 0;
-                    padding: 0;
+                  body{
+                    min-height: 100%;
+                    background-color: #444444;
+                    color: #FAFAFA;
                   }
                 </style>
-                <style data-aphrodite>${data.css.content}</style>
               </head>
               <body>
                 <div id="root">${data.html}</div>

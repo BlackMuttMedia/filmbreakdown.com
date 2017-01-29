@@ -13,6 +13,10 @@ export default function createRoutes (store) {
         cb(null, [
           require('./PostList').default(store), // no need to modify store, no reducer
           require('./Post').default(store), // add async reducer
+          require('./Genres').default(store), // add async reducer
+          require('./Genre').default(store), // add async reducer
+          require('./Films').default(store), // add async reducer
+          require('./Film').default(store), // add async reducer
           require('./NotFound').default
         ])
       })

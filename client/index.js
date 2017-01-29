@@ -60,6 +60,7 @@ const render = () => {
 
       // Don't fetch data for initial route, server has already done the work:
       if (window.INITIAL_STATE) {
+        trigger('fetch', components, locals)
         // Delete initial data so that subsequent data fetches can occur:
         delete window.INITIAL_STATE
       } else {
