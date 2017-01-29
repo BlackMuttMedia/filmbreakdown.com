@@ -12,7 +12,7 @@
     "build": "webpack -p --config ./tools/webpack.client.prod.js && webpack -p --config ./tools/webpack.server.prod.js",
     "clean": "rm -rf build",
     "live": "NODE_ENV=production PORT=3000 pm2 restart /var/www/filmbreakdown.com/build/server/server.js",
-    "live-start": "NODE_ENV=production PORT=3000 pm2 start /var/www/filmbreakdown.com/build/server/server.js",
+    "live-start": "NODE_ENV=production PORT=3000 pm2 start /var/www/filmbreakdown.com/build/server/server.js"
   },
   "repository": {
     "type": "git",
