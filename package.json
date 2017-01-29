@@ -11,12 +11,12 @@
     "heroku-postbuild": "npm run build",
     "build": "webpack -p --config ./tools/webpack.client.prod.js && webpack -p --config ./tools/webpack.server.prod.js",
     "clean": "rm -rf build",
-    "live": "NODE_ENV=production PORT=3000 pm2 restart /var/www/filmbreakdown.com/build/server/server.js",
-    "live-start": "NODE_ENV=production PORT=3000 pm2 start /var/www/filmbreakdown.com/build/server/server.js"
+    "live": "NODE_ENV=production PORT=3000 pm2 restart /var/www/filmbreakdown.com/build/server.js",
+    "live-start": "NODE_ENV=production PORT=3000 pm2 start /var/www/filmbreakdown.com/build/server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaredpalmer/react-production-starter.git"
+    "url": "git+https://github.com/BlackMuttMedia/filmbreakdown.com.git"
   },
   "keywords": [],
   "author": "jaredpalmer",
