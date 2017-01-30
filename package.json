@@ -50,6 +50,7 @@
     "history": "^4.0.0",
     "hpp": "^0.2.0",
     "json-loader": "^0.5.4",
+    "jsonwebtoken": "^7.2.1",
     "jwt-decode": "^2.1.0",
     "lodash": "^4.17.4",
     "mongoose": "^4.8.0",
