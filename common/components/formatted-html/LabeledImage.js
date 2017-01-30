@@ -48,14 +48,16 @@ var LabeledImage = React.createClass({
 		);
 	},
 	__onMouseEnter: function() {
-		var imageStyle = this.state.imageStyle;
-		imageStyle.opacity = 1;
+		var imageStyle = {
+			...this.state.imageStyle,
+			opacity: 1}
 
 		this.setState({ imageStyle: imageStyle });
 	},
 	__onMouseLeave: function() {
-		var imageStyle = this.state.imageStyle;
-		imageStyle.opacity = this.props.fullOpacity ? 1 : .6;
+		var imageStyle = {
+			...this.state.imageStyle,
+			opacity: this.props.fullOpacity ? 1 : .6}
 
 		this.setState({ imageStyle: imageStyle });
 	}

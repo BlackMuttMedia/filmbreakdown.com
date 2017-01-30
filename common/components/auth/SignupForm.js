@@ -1,17 +1,24 @@
 /* eslint-disable */
-var React = require('react');
-import {connect} from 'react-redux';
-var Router = require('react-router');
-var Route = Router.Route;
-var RouteHandler = Router.RouteHandler;
-var Link = Router.Link;
-var DefaultRoute = Router.DefaultRoute; 
-import { Dropdown, MenuItem, Form, FormControl, Button, Row	, Col, SafeAnchor, Alert } from 'react-bootstrap';
-//import * as actionCreators from '../../flux/action_creators';
+import { provideHooks } from 'redial'
+import React, { PropTypes } from 'react'
+import {connect} from 'react-redux'
+import Router, { Route, RouteHandler, Link, DefaultRoute } from 'react-router'
+import { Dropdown, MenuItem, Form, FormGroup, FormControl, Button, Row	, Col, SafeAnchor, Alert } from 'react-bootstrap'
+import { saveUser } from './actions'
+import { selectAuth } from '../../reducers/auth'
 
-//var SignupFormComponent = React.createClass({
-var SignupForm = React.createClass({
-	render: function() {
+const redial = {
+  //fetch: ({ dispatch, params: { slug } }) => dispatch(loadGenre(slug))
+}
+
+const mapStateToProps = state => ({
+  auth: selectAuth(state)
+    // currentAuthorization: state.get('currentAuthorization'),
+    // config: state.get('config'),
+})
+
+class SignupFormComponent extends React.Component {
+	render() {
 		return(
 			<Row>
 				<Col sm={12}>
@@ -29,47 +36,58 @@ var SignupForm = React.createClass({
 					: null }
 					<Row>
 						<Col sm={12}>
-							<Form onSubmit={this.signup}>
-								<FormControl bsSize="medium" placeholder='First Name' type='text' ref='firstName' />
-								<FormControl bsSize="medium" placeholder='Last Name' type='text' ref='lastName' />
-								<FormControl bsSize="medium" placeholder='Email Address' type='text' ref='email' />
-								<FormControl bsSize="medium" placeholder='Username' type='text' ref='username' />
-								<FormControl bsSize="medium" placeholder='Password' type='password' ref='password' />
-								<FormControl bsSize="medium" placeholder='Confirm Password' type='password' ref='confirm' />
-								<Button type="submit">Sign Up</Button>
+							<Form horizontal onSubmit={this.signup}>
+								<Col sm={12}>
+									<FormGroup>
+										<FormControl bsSize="medium" placeholder='First Name' type='text' inputRef={ref => { this.firstName = ref }} />
+                  </FormGroup>
+                  <FormGroup>
+										<FormControl bsSize="medium" placeholder='Last Name' type='text' inputRef={ref => { this.lastName = ref }} />
+                  </FormGroup>
+                  <FormGroup>
+										<FormControl bsSize="medium" placeholder='Email Address' type='text' inputRef={ref => { this.email = ref }} />
+                  </FormGroup>
+                  <FormGroup>
+										<FormControl bsSize="medium" placeholder='Username' type='text' inputRef={ref => { this.username = ref }} />
+                  </FormGroup>
+                  <FormGroup>
+										<FormControl bsSize="medium" placeholder='Password' type='password' inputRef={ref => { this.password = ref }} />
+                  </FormGroup>
+                  <FormGroup>
+										<FormControl bsSize="medium" placeholder='Confirm Password' type='password' inputRef={ref => { this.confirm = ref }} />
+                  </FormGroup>
+                  <FormGroup>
+										<Button type="submit">Sign Up</Button>
+									</FormGroup>
+								</Col>
 							</Form>
 						</Col>
 					</Row>
 				</Col>
 			</Row>
-		);
-	},
-  signup: function(e) {
+		)
+	}
+
+  signup = (e) => {
   	e.preventDefault();
   	var user = {};
-  	user.firstName = this.refs.firstName.getValue();
-  	user.lastName = this.refs.lastName.getValue();
-  	user.email = this.refs.email.getValue();
-  	user.username = this.refs.username.getValue();
-  	user.password = this.refs.password.getValue();
-  	user.confirm = this.refs.confirm.getValue();
+  	user.firstName = this.firstName.value
+  	user.lastName = this.lastName.value
+  	user.email = this.email.value
+  	user.username = this.username.value
+  	user.password = this.password.value
+  	user.confirm = this.confirm.value
 
-  	this.props.saveUser(user, this.handleSignup);
-  },
-  handleSignup: function(userData) {
+  	const{dispatch} = this.props;
+  	dispatch(saveUser(user, this.handleSignup))
+  }
+
+  handleSignup = (userData) => {
   	console.log(this.props);
   	if(this.props.handleAuthorization){
   		this.props.handleAuthorization(userData, this.props.reveal);
   	}
   }
-});
-
-function mapStateToProps(state) {
-  return {
-    currentAuthorization: state.get('currentAuthorization'),
-    config: state.get('config'),
-  };
 }
 
-//var SignupForm = connect(mapStateToProps, actionCreators)(SignupFormComponent);
-module.exports = SignupForm;
+module.exports = provideHooks(redial)(connect(mapStateToProps)(SignupFormComponent))

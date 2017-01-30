@@ -1,5 +1,7 @@
 /* eslint-disable */
-import React from 'react'
+import React, { PropTypes } from 'react'
+import { provideHooks } from 'redial'
+import {connect} from 'react-redux'
 import { IndexLink, Link } from 'react-router'
 import { StyleSheet, css } from 'aphrodite'
 import { Row, Col, Navbar, Nav, NavItem, MenuItem, Thumbnail, Modal } from 'react-bootstrap'
@@ -8,15 +10,28 @@ import { Typeahead } from 'react-bootstrap-typeahead'
 import Reveal from './Reveal'
 import LoginForm from './auth/LoginForm'
 import SignupForm from './auth/SignupForm'
+import { selectAuth, selectIsLoggedIn, selectCurrentUser } from '../reducers/auth'
+import { clearAuthMessage, deleteAuthorization } from './auth/actions'
 
-export default class extends React.Component {
+const redial = {
+  //fetch: ({ dispatch, params: { slug } }) => dispatch(loadGenre(slug))
+}
+
+const mapStateToProps = state => ({
+  currentAuthorization: selectAuth(state),
+  isLoggedIn: selectIsLoggedIn(state),
+  currentUser: selectCurrentUser(state)
+    // currentAuthorization: state.get('currentAuthorization'),
+    // config: state.get('config'),
+})
+
+class TopNavComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { text: '' };
   }
 
   render() {
-
     return(
       <Navbar className={css(styles.navbarStyle)} bsSize='small' staticTop inverse>
         <Navbar.Header>
@@ -59,49 +74,39 @@ export default class extends React.Component {
             </LinkContainer>
           </Nav>
         </Navbar.Collapse>
-              <Reveal ref='loginReveal' revealHeader="Log In" revealContent={<LoginForm reveal={this.refs.loginReveal} handleAuthorization={this.handleLoginAuthorization} />} />
-              <Reveal ref="signupReveal" revealHeader="Sign Up" revealContent={<SignupForm reveal={this.refs.signupReveal} handleAuthorization={this.handleLoginAuthorization} />} />
+              <Reveal ref='loginReveal' revealHeader="Log In" revealContent={<LoginForm reveal={'loginReveal'} handleAuthorization={this.handleLoginAuthorization} />} />
+              <Reveal ref='signupReveal' revealHeader='Sign Up' revealContent={<SignupForm reveal={this.refs.signupReveal} handleAuthorization={this.handleLoginAuthorization} />} />
       </Navbar>
     );
   }
 
   onTypeaheadChange = (e) =>  {
-    console.log(e); 
-    return;
     var value = e.target.value;
     this.setInputValue(value);
     this.props.fetchFilmSearch(value, 1);
   }
 
   setInputValue = (value) => {
-    console.log(value); 
-    return;
     this.setState({ inputValue: value });
   }
 
   clearState = () => {
-    return;
     this.setState({ inputValue: undefined })
     this.props.fetchFilmSearch(undefined);
   }
 
   onBlur = () => {
-    return;
     this.setState({ selectedTitle: undefined });
   }
 
   optionChange = (event, optionData, index) => {
-    console.log(event); 
-    return;
     var title = index >= 0 ? optionData.original_title : undefined;
     this.setState({ selectedTitle: title })
   }
 
   handleSignoutClick = (e) => {
-    console.log(e); 
-    return;
     e.preventDefault();
-    this.props.deleteAuthorization();
+    this.props.dispatch(deleteAuthorization())
   }
 
   handleSignupClick = (e) => {
@@ -114,16 +119,15 @@ export default class extends React.Component {
     this.refs.loginReveal.handleClick(e);
   }
 
-  handleLoginAuthorization = (userData, component) => {
-    console.log(userData); 
-    return;
+  handleLoginAuthorization = (userData, componentName) => {
     var self = this;
-
+    var component = this.refs[componentName]
     if(userData && userData.success)
     {
       setTimeout(function() { 
-        component.close();
-        self.props.clearAuthMessage();
+        component.close()
+
+        self.props.dispatch(clearAuthMessage())
       }, 500);
     }
   }
@@ -152,4 +156,4 @@ const styles = StyleSheet.create({
   }
 })
 
-//export default TopNav
+export default provideHooks(redial)(connect(mapStateToProps)(TopNavComponent))

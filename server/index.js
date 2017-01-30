@@ -25,10 +25,17 @@ import { compileDev, startDev } from '../tools/dx'
 import { configureStore } from '../common/store'
 import reducer from '../common/createReducer'
 import createRoutes from '../common/routes/root'
+import mongoose from 'mongoose'
 
 export const createServer = (config) => {
   const __PROD__ = config.nodeEnv === 'production'
   const __TEST__ = config.nodeEnv === 'test'
+
+  var mongooseHost = 'mongodb://localhost/filmbreakdown';
+  if(!__PROD__) {
+    mongooseHost = mongooseHost + '-dev';
+  }
+  mongoose.connect(mongooseHost);
 
   const app = express()
   let assets = null
@@ -60,6 +67,7 @@ export const createServer = (config) => {
   app.use('/api/v0/posts', require('./api/posts'))
   app.use('/api/v0/genres', require('./api/genres'))
   app.use('/api/v0/films', require('./api/films'))
+  app.use('/api/v0/auth', require('./api/auth'))
 
   app.get('*', (req, res) => {
     const store = configureStore({

@@ -4,7 +4,7 @@ import TopNav from './TopNav'
 
 const App = ({ children }) => (
   <div>
-    <Helmet title='React Production Starter' titleTemplate='%s - React Production Starter' />
+    <Helmet title='Film Breakdown' titleTemplate='%s - Film Breakdown' />
     <TopNav />
     {children}
   </div>
