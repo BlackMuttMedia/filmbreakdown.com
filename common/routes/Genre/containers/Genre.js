@@ -1,10 +1,9 @@
 /* eslint-disable */
 import { provideHooks } from 'redial'
 import React, { PropTypes } from 'react'
-import { loadGenre } from '../actions'
 import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
-import { selectGenre } from '../reducer'
+import { selectGenre, selectDescriptions } from '../reducer'
 import _ from 'lodash'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Background from '../../../components/formatted-html/Background'
@@ -12,16 +11,22 @@ import PageContainer from '../../../components/template/PageContainer'
 import ItemList from '../../../components/items/ItemList'
 import * as FilmHelpers from '../../../helpers/FilmHelpers'
 import GenreContent from '../components/GenreContent'
+import { selectAuth, selectIsLoggedIn, selectCurrentUser } from '../../../reducers/auth'
+import { loadGenre, loadGenreDescriptions, saveGenreDescription } from '../actions'
 
 const redial = {
   fetch: ({ dispatch, params: { slug } }) => dispatch(loadGenre(slug))
 }
 
 const mapStateToProps = state => ({
-  genre: selectGenre(state)
+  genre: selectGenre(state),
+  auth: selectAuth(state), 
+  isLoggedIn: selectIsLoggedIn(state),
+  currentUser: selectCurrentUser,
+  descriptions: selectDescriptions(state),
 })
 
-const GenrePage = ({ genre }) => (
+const GenrePage = ({ genre, auth, isLoggedIn, currentUser, descriptions, dispatch }) => (
   <Grid>
     { !genre.isLoading && genre.data.films &&
       <Background config={genre.config} backgroundPath={_.sample(genre.data.films.results).backdrop_path} /> }
@@ -37,7 +42,8 @@ const GenrePage = ({ genre }) => (
     </Row>
     <Row style={{ textShadow: '2px 2px 2px #444' }}>
       <GenreContent 
-        userToken={genre.currentAuthorization ? genre.currentAuthorization.get('jwt') : undefined} 
+        userToken={auth ? auth.jwt : undefined} 
+        userId={currentUser ? currentUser._id : undefined}
         config={genre.config}
         films={(genre.data.films || {}).results || []} 
         baseUrl='/film/' 
@@ -46,7 +52,8 @@ const GenrePage = ({ genre }) => (
         endpointUrl={''/*this.props.info.endpointUrl*/}
         noUserAnchorHref={''/*this.props.info.noUserAnchorHref*/} 
         noUserAnchorText={null/*this.props.info.noUserAnchorText*/}
-        descriptions={null/*this.props.info.descriptions*/} />
+        descriptions={ descriptions }
+        handleSubmit={(description, cb) => dispatch(saveGenreDescription(genre.data.name.toLowerCase(), description, cb))} />
     </Row>
   </Grid>
 )

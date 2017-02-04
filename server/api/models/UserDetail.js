@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 	SALT_WORK_FACTOR = 10;
 
 var UserDetail = new Schema({
+    _id: { type: Schema.Types.ObjectId },
 		firstName: { type: String, required: true },
 		lastName: { type: String, required: true },
 		email: { type: String, required: true, index: { unique: true } },

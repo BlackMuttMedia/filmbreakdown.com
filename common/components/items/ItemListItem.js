@@ -39,7 +39,7 @@ var format = function (incoming) {
 			var content = incoming;
 			for (var i = 1; i < arguments.length; i++) {
 						var replacement = '{' + (i - 1) + '}';
-						content = content.replace(replacement, arguments[i]);
+						content = content.replace(replacement, arguments[i]).toLowerCase();
 			}
 			return content;
 }

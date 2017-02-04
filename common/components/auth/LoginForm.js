@@ -53,7 +53,7 @@ class LoginFormComponent extends React.Component {
 							<Form horizontal onSubmit={this.authenticate}>
                 <Col sm={12}>
                   <FormGroup>
-                    <FormControl type='text' bsSize="medium" placeholder='Username' type='text' inputRef={ref => { this.username = ref }} />
+                    <FormControl autoFocus type='text' bsSize="medium" placeholder='Username' type='text' inputRef={ref => { this.username = ref }} />
                   </FormGroup>
                   <FormGroup>
     								<FormControl type='text' bsSize="medium" placeholder='Password' type='password' inputRef={ref => { this.password = ref }} />

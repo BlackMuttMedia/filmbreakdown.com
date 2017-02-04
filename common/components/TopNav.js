@@ -4,7 +4,7 @@ import { provideHooks } from 'redial'
 import {connect} from 'react-redux'
 import { IndexLink, Link } from 'react-router'
 import { StyleSheet, css } from 'aphrodite'
-import { Row, Col, Navbar, Nav, NavItem, MenuItem, Thumbnail, Modal } from 'react-bootstrap'
+import { Row, Col, FormGroup, Navbar, Nav, NavItem, MenuItem, Thumbnail, Modal } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Typeahead } from 'react-bootstrap-typeahead'
 import Reveal from './Reveal'
@@ -43,35 +43,26 @@ class TopNavComponent extends React.Component {
             {this.props.isLoggedIn ? null : <NavItem eventKey={3} href='#' onClick={this.handleLoginClick}>Log In</NavItem>}
             {this.props.isLoggedIn ? null : <NavItem eventKey={4} href='#' onClick={this.handleSignupClick}>Sign Up</NavItem>}
           </Nav>
-          <Nav pullRight>
-            <form className='navbar-form' role='search'>
-              <div className='form-group form-group-sm'>
+          <Navbar.Form pullRight>
+            <FormGroup>
               <Typeahead
-                options={['selected', 'option', 'thing', 'stuff', 'another', 'finally']}
-              />
-                {/*<Typeahead 
-                  className='input-group-sm input-group'
-                  placeholder='Search for films ...'
-                  onChange={this.onTypeaheadChange} 
-                  onBlur={this.onBlur}
-                  onOptionClick={this.clearState}
-                  onOptionChange={this.optionChange}
-                  options={(this.props.searchResults || List()).take(10).toJS()} 
-                  optionTemplate={SearchTemplate}
-                  inputValue={this.state.selectedTitle || this.state.inputValue} />*/}
-              </div>
-            </form>
-          </Nav>
+                options={['selected', 'option', 'thing', 'stuff', 'another', 'finally']} />
+              {/*<Typeahead 
+                className='input-group-sm input-group'
+                placeholder='Search for films ...'
+                onChange={this.onTypeaheadChange} 
+                onBlur={this.onBlur}
+                onOptionClick={this.clearState}
+                onOptionChange={this.optionChange}
+                options={(this.props.searchResults || List()).take(10).toJS()} 
+                optionTemplate={SearchTemplate}
+                inputValue={this.state.selectedTitle || this.state.inputValue} />*/}
+            </FormGroup>
+          </Navbar.Form>
           <Nav pullLeft>
-            <LinkContainer to='/films'>
-              <MenuItem eventKey={1.1}>Films</MenuItem>
-            </LinkContainer>
-            <LinkContainer to='/genres'>
-              <MenuItem eventKey={1.2}>Genres</MenuItem>
-            </LinkContainer>
-            <LinkContainer to='/posts'>
-              <MenuItem eventKey={1.3}>Posts</MenuItem>
-            </LinkContainer>
+            <LinkContainer to='/films'><NavItem>Films</NavItem></LinkContainer>
+            <LinkContainer to='/genres'><NavItem>Genres</NavItem></LinkContainer>
+            <LinkContainer to='/posts'><NavItem>Posts</NavItem></LinkContainer>
           </Nav>
         </Navbar.Collapse>
               <Reveal ref='loginReveal' revealHeader="Log In" revealContent={<LoginForm reveal={'loginReveal'} handleAuthorization={this.handleLoginAuthorization} />} />

@@ -70,26 +70,26 @@ router.post('/login',(req, res) => {
 })
 
 router.post('/signup', (req, res) => {
-    var userDetail = mongoose.model('userInfo', UserDetail);
-    var newUser = new userDetail({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      username: req.body.username,
-      password: req.body.password,
-      confirm: req.body.confirm
-    });
+  var userDetail = mongoose.model('userInfo', UserDetail);
+  var newUser = new userDetail({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    username: req.body.username,
+    password: req.body.password,
+    confirm: req.body.confirm
+  });
 
-    // save user to database
-    newUser.save(function(err) {
-      if (err) {
-        res.json({ 'success' : false, 'error' : err });
-      }
-      else {
-        var token = jwt.sign(newUser, secret, { expiresInMinutes: 60*5 });
-        res.json({ 'success' : true, 'exists' : true, 'error' : undefined, 'user' : newUser, 'token' : token });
-      }
-    });
-  })
+  // save user to database
+  newUser.save(function(err) {
+    if (err) {
+      res.json({ 'success' : false, 'error' : err });
+    }
+    else {
+      var token = jwt.sign(newUser, secret, { expiresInMinutes: 60*5 });
+      res.json({ 'success' : true, 'exists' : true, 'error' : undefined, 'user' : newUser, 'token' : token });
+    }
+  });
+})
 
 module.exports = router
