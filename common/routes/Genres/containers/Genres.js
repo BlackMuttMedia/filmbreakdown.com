@@ -4,7 +4,7 @@ import React, { PropTypes } from 'react'
 import { loadGenres } from '../actions'
 import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
-import { selectGenres } from '../reducer'
+import { selectGenres, selectFilms } from '../reducer'
 import PageContainer from '../../../components/template/PageContainer'
 import ItemList from '../../../components/items/ItemList'
 import * as FilmHelpers from '../../../helpers/FilmHelpers'
@@ -14,11 +14,13 @@ const redial = {
 }
 
 const mapStateToProps = state => ({
-  genres: selectGenres(state)
+  genres: selectGenres(state),
+  films: selectFilms(state)
 })
 
 const GenresPage = ({ genres, config, films }) => (
 	<PageContainer>
+    { console.log(genres) }
     <Helmet title='All Genres' />
     {genres.isLoading &&
       <div>
@@ -27,7 +29,7 @@ const GenresPage = ({ genres, config, films }) => (
     {!genres.isLoading &&
       <ItemList 
 				config={genres.config} 
-				items={getGenres(genres.data)} 
+				items={getGenres(genres.data, films)} 
 				urlFormat='{1}'
 				linkTo="/genre"
 				backdrops={FilmHelpers.GetBackdrops(genres.data, films)} /> }
@@ -38,9 +40,17 @@ GenresPage.PropTypes = {
   genres: PropTypes.array.isRequired
 }
 
-const getGenres = (incoming) => { 
+const getGenres = (incoming, films) => { 
+  let filmsData = (films || {}).data || [];
 	let genres = (incoming || []).map((genre) => { 
+    let genreFilms = filmsData.filter((film) => {
+      return film.genre_ids.indexOf(genre.id) >= 0
+    })
+
 		genre.backgroundPath = FilmHelpers.GetBackdrop(genre)
+    genre.films = {
+      results: genreFilms
+    }
 		return genre
 	})
 

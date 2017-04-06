@@ -23,7 +23,7 @@ import _ from 'lodash';
 };*/
 
 export function GetBackdrop(genre, films) {
-	var genreFilms = genre.films.results;
+	var genreFilms = (genre.films || {}).results || [];
 	var backdrop = null;
 
 	if(genreFilms != undefined && genreFilms.length > 0)
