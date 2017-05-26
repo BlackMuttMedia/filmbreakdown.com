@@ -29,7 +29,7 @@ const mapStateToProps = state => ({
 const GenrePage = ({ genre, auth, isLoggedIn, currentUser, descriptions, dispatch }) => (
   <Grid>
     { !genre.isLoading && genre.data.films &&
-      <Background config={genre.config} backgroundPath={_.sample(genre.data.films.results).backdrop_path} /> }
+      <Background config={genre.config} backgroundPath={(_.sample(genre.data.films.results) || {}).backdrop_path} /> }
     <Row>
       <Col md={12}>
         {genre.isLoading &&

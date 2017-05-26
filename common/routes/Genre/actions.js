@@ -12,13 +12,20 @@ export function loadGenre (slug) {
     dispatch(loadGenreDescriptions(slug, 0, 10))
     return axios.get(`${protocol}://${host}/api/v0/genres/${slug}`)
       .then(res => {
-        dispatch({
-          type: LOAD_GENRE_SUCCESS,
-          payload: res.data,
-          meta: {
-            lastFetched: Date.now()
-          }
-        })
+        const genre = res.data
+        const genreId = genre.id
+        axios.get(`${protocol}://${host}/api/v0/genres/${genreId}/films`)
+          .then((res) => {
+            genre.films = { results: res.data }
+
+            dispatch({
+              type: LOAD_GENRE_SUCCESS,
+              payload: genre,
+              meta: {
+                lastFetched: Date.now()
+              }
+            })
+          })
       })
       .catch(error => {
         console.error(`Error in reducer that handles ${LOAD_GENRE_SUCCESS}: `, error)

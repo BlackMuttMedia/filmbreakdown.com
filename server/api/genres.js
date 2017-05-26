@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 import GenreDescriptionSchema from './models/GenreDescriptionSchema'
 import config from '../config'
 import { init } from '../../common/tmdb-urls' 
+import _ from 'lodash'
 
 const router = new Router()
 const tmdbUrls = init(config.tmdb_key).api_urls
@@ -18,7 +19,6 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:slug/films/:page?', (req, res) => {
-  console.log(util.format(tmdbUrls.genre_movies, req.params.slug, (req.params.page || 1)))
   axios.get(util.format(tmdbUrls.genre_movies, req.params.slug, (req.params.page || 1)))
     .then((response) => {
       res.status(200).json(response.data.results)
@@ -26,7 +26,13 @@ router.get('/:slug/films/:page?', (req, res) => {
 })
 
 router.get('/:slug', (req, res) => {
-  const index = genres.genres.findIndex(el => el.name.toLowerCase() === req.params.slug.toLowerCase())
+  axios.get(tmdbUrls.genre_list)
+    .then((response) => {
+      const genre = _.find(response.data.genres, (item) => item.name.toLowerCase() == req.params.slug.toLowerCase())
+      res.status(200).json(genre)
+    })
+
+  /*const index = genres.genres.findIndex(el => el.name.toLowerCase() === req.params.slug.toLowerCase())
   if (index < 0) {
     res.status(404).json({
       error: 'Post does not exist in db'
@@ -35,11 +41,13 @@ router.get('/:slug', (req, res) => {
 
   setTimeout(() => {
     res.status(200).json(genres.genres[index])
-  }, 300)
+  }, 300)*/
 })
 
 router.get('/:slug/descriptions/*?', (req, res) => {
-  var genreDescriptionSchema = mongoose.model('genreDescriptions', GenreDescriptionSchema);
+  res.status(200).json([])
+
+  /*var genreDescriptionSchema = mongoose.model('genreDescriptions', GenreDescriptionSchema);
   const index = genres.genres.findIndex(el => el.name.toLowerCase() === req.params.slug.toLowerCase())
   const paramsCount = req.params.length
 
@@ -73,7 +81,7 @@ router.get('/:slug/descriptions/*?', (req, res) => {
     {
       res.json({ 'success' : true, 'error' : err, 'descriptions' : (descriptions || []) });
     }
-  });
+  });*/
 })
 
 router.post('/descriptions/save', (req, res) => {
