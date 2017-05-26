@@ -1,6 +1,9 @@
 import { combineReducers } from 'redux'
 
 let auth = require('./reducers/auth').default
+let nowPlaying = require('./reducers/nowPlaying').default
+let genres = require('./reducers/genres').default
+let films = require('./reducers/films').default
 
 const initialState = {
   host: '',
@@ -14,6 +17,9 @@ const sourceRequest = (state = initialState, action) => state
 export default function createReducer (asyncReducers) {
   return combineReducers({
     sourceRequest,
+    nowPlaying,
+    genres,
+    films,
     auth,
     ...asyncReducers
   })

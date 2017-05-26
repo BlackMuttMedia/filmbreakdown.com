@@ -3,6 +3,8 @@ import config from '../../config'
 
 const initialState = {
   data: [],
+  credits: [],
+  cast: [],
   lastFetched: null,
   isLoading: false,
   error: null,

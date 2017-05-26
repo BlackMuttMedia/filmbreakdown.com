@@ -8,7 +8,7 @@ export function loadFilms () {
       .then(res => {
         dispatch({
           type: LOAD_FILMS_SUCCESS,
-          payload: res.data,
+          payload: res.data.results,
           meta: {
             lastFetched: Date.now()
           }

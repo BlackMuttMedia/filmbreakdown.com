@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as types from '../../constants'
 import config from '../../config'
 import _ from 'lodash'
@@ -11,28 +12,21 @@ const initialState = {
 }
 
 export default function genres (state = initialState, action) {
-  console.log('STATE!')
-  console.log(state)
+  //console.log('STATE!')
+  //console.log(state)
   switch (action.type) {
-    case types.LOAD_GENRES_REQUEST:
-      return { ...state,
-        isLoading: true,
-        error: null}
-    case types.LOAD_GENRES_SUCCESS:
-      return { ...state,
-        data: action.payload,
-        lastFetched: action.meta.lastFetched,
-        isLoading: false}
-    case types.LOAD_GENRES_FAILURE:
-      return { ...state,
-        error: action.payload}
     default:
       return state
   }
 }
 
 // Example of a co-located selector
-export const selectGenres = state => state.genres
+export const selectGenres = state => {
+  /*console.log('GENRES STATE')
+  console.log(state)
+  console.log(state.films)*/
+  return state.genres
+} 
 export const selectFilms = state => state.films
 /*
 export const selectGenres = state =>  { 

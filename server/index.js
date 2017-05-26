@@ -68,6 +68,7 @@ export const createServer = (config) => {
   app.use('/api/v0/genres', require('./api/genres'))
   app.use('/api/v0/films', require('./api/films'))
   app.use('/api/v0/auth', require('./api/auth'))
+  app.use('/api/v0/popular', require('./api/popular'))
 
   app.get('*', (req, res) => {
     const store = configureStore({

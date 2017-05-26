@@ -1,26 +1,30 @@
 import { Router } from 'express'
-import _ from 'lodash'
+import axios from 'axios'
+import util from 'util'
+import mongoose from 'mongoose'
+import GenreDescriptionSchema from './models/GenreDescriptionSchema'
+import config from '../config'
+import { init } from '../../common/tmdb-urls' 
 
 const router = new Router()
-
-// Remove this
-import genres from '../genres.js'
-
-const films = () => {
-  return _.uniqBy(_.union.apply(null, _.map(genres.genres, (genre) => genre.films.results )), 'id')
-}
+const tmdbUrls = init(config.tmdb_key).api_urls
+let films = []
 
 router.get('/', (req, res) => {
-  let returnFilms = {results: _.take(films(), 20)}
-  setTimeout(() => {
-    res.status(200).json(_.take(films(), 20))
-  }, 300)
+  axios.get(util.format(tmdbUrls.misc_popular, 1))
+    .then((response) => {
+      res.status(200).json(response.data)
+    })
 })
 
 router.get('/:slug', (req, res) => {
   const id = (req.params.slug || '').substring(0, req.params.slug.indexOf('-'))
 
-  const index = _.findIndex(films(), el => el.id == id)
+  axios.get(util.format(tmdbUrls.movie_info, id))
+    .then((response) => {
+      res.status(200).json(response.data)
+    })
+  /*const index = _.findIndex(films(), el => el.id == id)
   if (index < 0) {
     res.status(404).json({
       error: 'Post does not exist in db'
@@ -29,7 +33,26 @@ router.get('/:slug', (req, res) => {
 
   setTimeout(() => {
     res.status(200).json(films()[index])
-  }, 300)
+  }, 300)*/
+})
+
+router.get('/:slug/credits', (req, res) => {
+  const id = (req.params.slug || '').substring(0, req.params.slug.indexOf('-'))
+
+  axios.get(util.format(tmdbUrls.movie_casts, id))
+    .then((response) => {
+      res.status(200).json(response.data)
+    })
+  /*const index = _.findIndex(films(), el => el.id == id)
+  if (index < 0) {
+    res.status(404).json({
+      error: 'Post does not exist in db'
+    })
+  }
+
+  setTimeout(() => {
+    res.status(200).json(films()[index])
+  }, 300)*/
 })
 
 module.exports = router

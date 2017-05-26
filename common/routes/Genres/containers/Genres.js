@@ -14,13 +14,13 @@ const redial = {
 }
 
 const mapStateToProps = state => ({
-  genres: selectGenres(state),
-  films: selectFilms(state)
+  genres: state.genres,
+  films: selectFilms(state), 
+  //state: state
 })
 
-const GenresPage = ({ genres, config, films }) => (
+const GenresPage = ({ genres, films }) => (
 	<PageContainer>
-    { console.log(genres) }
     <Helmet title='All Genres' />
     {genres.isLoading &&
       <div>

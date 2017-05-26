@@ -11,7 +11,7 @@ export default function createRoutes (store) {
       ], (require) => {
         let GenresPage = require('./containers/Genres').default
         let genresReducer = require('./reducer').default
-        injectAsyncReducer(store, 'genres', genresReducer)
+        injectAsyncReducer(store, 'genres_page', genresReducer)
         cb(null, GenresPage)
       })
     }

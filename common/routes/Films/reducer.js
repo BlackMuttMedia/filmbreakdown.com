@@ -1,5 +1,6 @@
 import * as types from '../../constants'
 import config from '../../config'
+import _ from 'lodash'
 
 const initialState = {
   data: [],
@@ -11,22 +12,17 @@ const initialState = {
 
 export default function films (state = initialState, action) {
   switch (action.type) {
-    case types.LOAD_FILMS_REQUEST:
-      return { ...state,
-        isLoading: true,
-        error: null}
-    case types.LOAD_FILMS_SUCCESS:
-      return { ...state,
-        data: action.payload,
-        lastFetched: action.meta.lastFetched,
-        isLoading: false}
-    case types.LOAD_FILMS_FAILURE:
-      return { ...state,
-        error: action.payload}
     default:
       return state
   }
 }
 
 // Example of a co-located selector
-export const selectFilms = state => state.films
+export const selectFilms = state => 
+{
+  //let returnFilms = { data: _.sampleSize(state.films.data, 20), isLoading: state.films.isLoading, config: state.films.config }
+  let returnFilms = { data: _.take(state.films.data, 20), isLoading: state.films.isLoading, config: state.films.config }
+  //console.log(returnFilms)
+  //console.log(state.films)
+  return returnFilms
+}

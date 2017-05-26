@@ -1,25 +1,36 @@
-import { * } from '../../constants'
+/* eslint-disable */
+import { LOAD_POPULAR_REQUEST, LOAD_POPULAR_SUCCESS, LOAD_POPULAR_FAILURE, LOAD_FILMS_SUCCESS } from '../../constants'
 import common_config from '../../common-config'
 var tmdbUrls = require('../../tmdb-urls').init(common_config.tmdb_key).api_urls
 
 export function loadNowPlaying () {
   return (dispatch, getState, { axios }) => {
     const { protocol, host } = getState().sourceRequest
-    dispatch({ type: LOAD_GENRES_REQUEST })
-    return axios.get(`${protocol}://${host}/api/v0/genres`)
+    const popular = getState().popular
+    dispatch({ type: LOAD_POPULAR_REQUEST })
+    return popular ? undefined : 
+     axios.get(`${protocol}://${host}/api/v0/popular`)
       .then(res => {
         dispatch({
-          type: LOAD_GENRES_SUCCESS,
-          payload: res.data,
+          type: LOAD_POPULAR_SUCCESS,
+          payload: res.data.results,
+          meta: {
+            lastFetched: Date.now()
+          }
+        })
+
+        dispatch({
+          type: LOAD_FILMS_SUCCESS,
+          payload: res.data.results,
           meta: {
             lastFetched: Date.now()
           }
         })
       })
       .catch(error => {
-        console.error(`Error in reducer that handles ${LOAD_GENRES_SUCCESS}: `, error)
+        console.error(`Error in reducer that handles ${LOAD_POPULAR_SUCCESS}: `, error)
         dispatch({
-          type: LOAD_GENRES_FAILURE,
+          type: LOAD_POPULAR_FAILURE,
           payload: error,
           error: true
         })

@@ -1,15 +1,28 @@
 import { Router } from 'express'
+import axios from 'axios'
+import util from 'util'
 import mongoose from 'mongoose'
 import GenreDescriptionSchema from './models/GenreDescriptionSchema'
-const router = new Router()
+import config from '../config'
+import { init } from '../../common/tmdb-urls' 
 
-// Remove this
-import genres from '../genres.js'
+const router = new Router()
+const tmdbUrls = init(config.tmdb_key).api_urls
+let genres = []
 
 router.get('/', (req, res) => {
-  setTimeout(() => {
-    res.status(200).json(genres.genres)
-  }, 300)
+  axios.get(tmdbUrls.genre_list)
+    .then((response) => {
+      res.status(200).json(response.data)
+    })
+})
+
+router.get('/:slug/films/:page?', (req, res) => {
+  console.log(util.format(tmdbUrls.genre_movies, req.params.slug, (req.params.page || 1)))
+  axios.get(util.format(tmdbUrls.genre_movies, req.params.slug, (req.params.page || 1)))
+    .then((response) => {
+      res.status(200).json(response.data.results)
+    })
 })
 
 router.get('/:slug', (req, res) => {
