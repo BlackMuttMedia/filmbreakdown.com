@@ -44,3 +44,5 @@ export default function film (state = initialState, action) {
 
 // Example of a co-located selector
 export const selectFilm = state => state.film
+export const selectFilms = state => state.films
+export const selectGenres = state =>  state.genres

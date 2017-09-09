@@ -4,6 +4,7 @@ import {
   LOAD_GENRE_DESCRIPTIONS_REQUEST, LOAD_GENRE_DESCRIPTIONS_SUCCESS, LOAD_GENRE_DESCRIPTIONS_FAILURE,
   SAVE_GENRE_DESCRIPTION_REQUEST, SAVE_GENRE_DESCRIPTION_SUCCESS, SAVE_GENRE_DESCRIPTION_FAILURE
 } from '../../constants'
+import { loadGenreFilms } from '../Genres/actions'
 
 export function loadGenre (slug) {
   return (dispatch, getState, { axios }) => {
@@ -14,18 +15,19 @@ export function loadGenre (slug) {
       .then(res => {
         const genre = res.data
         const genreId = genre.id
-        axios.get(`${protocol}://${host}/api/v0/genres/${genreId}/films`)
+        dispatch({
+          type: LOAD_GENRE_SUCCESS,
+          payload: genre,
+          meta: {
+            lastFetched: Date.now()
+          }
+        })
+        dispatch(loadGenreFilms())
+        /*axios.get(`${protocol}://${host}/api/v0/genres/${genreId}/films`)
           .then((res) => {
             genre.films = { results: res.data }
 
-            dispatch({
-              type: LOAD_GENRE_SUCCESS,
-              payload: genre,
-              meta: {
-                lastFetched: Date.now()
-              }
-            })
-          })
+          })*/
       })
       .catch(error => {
         console.error(`Error in reducer that handles ${LOAD_GENRE_SUCCESS}: `, error)

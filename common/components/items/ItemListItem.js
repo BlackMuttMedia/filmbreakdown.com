@@ -28,7 +28,9 @@ var ItemListItem = React.createClass({
 						baseUrl={this.props.baseUrl} 
 						backgroundPath={this.props.backgroundPath} 
 						size={this.props.size} 
-						title={this.props.title} />
+						title={this.props.title}
+		        itemMinHeight={this.props.itemMinHeight}
+		        itemMaxHeight={this.props.itemMaxHeight}  />
 				</Link>
 			</Col>
 		);

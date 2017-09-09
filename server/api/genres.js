@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:slug/films/:page?', (req, res) => {
+  console.log(util.format(tmdbUrls.genre_movies, req.params.slug, (req.params.page || 1)))
   axios.get(util.format(tmdbUrls.genre_movies, req.params.slug, (req.params.page || 1)))
     .then((response) => {
       res.status(200).json(response.data.results)
@@ -28,7 +29,7 @@ router.get('/:slug/films/:page?', (req, res) => {
 router.get('/:slug', (req, res) => {
   axios.get(tmdbUrls.genre_list)
     .then((response) => {
-      const genre = _.find(response.data.genres, (item) => item.name.toLowerCase() == req.params.slug.toLowerCase())
+      const genre = _.find(response.data.genres, (item) => item.name.toLowerCase().replace(' ', '-') == req.params.slug.toLowerCase().replace(' ', '-'))
       res.status(200).json(genre)
     })
 

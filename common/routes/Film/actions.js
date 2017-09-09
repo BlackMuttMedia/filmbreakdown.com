@@ -5,12 +5,15 @@ import {
 } from '../../constants'
 var tmdbUrls = require('../../helpers/tmdb-urls').init('89a1a6500311a41b1a4c35541871e047').api_urls
 import { format } from '../../helpers/TextHelper'
+import { loadGenres } from '../Genres/actions'
 import promise from 'promise'
 import _ from 'lodash'
 
 export function loadFilm (slug) {
+  console.log('LOADING FILM!')
   const filmId = (slug || '').substring(0, (slug || '').indexOf('-'))
   return (dispatch, getState, { axios }) => {
+    // dispatch(loadGenres())
     const { protocol, host } = getState().sourceRequest
     const films = (getState().films || {}).data || []
     const filmData = _.find(films, (film) => film.id == filmId)

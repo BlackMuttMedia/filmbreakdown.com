@@ -23,7 +23,7 @@ var tmdb = function(api_key) {
       misc_now_playing:           this.base+'/movie/now_playing?page=%s&api_key='+this.api_key,
       misc_popular:               this.base+'/movie/popular?page=%s&api_key='+this.api_key,
       misc_top_rated:             this.base+'/movie/top-rated?page=%s&api_key='+this.api_key,
-      movie_info:                 this.base+'/movie/%s?api_key='+this.api_key,
+      movie_info:                 this.base+'/movie/%s?api_key='+this.api_key+'&append_to_response=credits',
       movie_alternative_titles:   this.base+'/movie/%s/alternative_titles?api_key='+this.api_key,
       movie_casts:                this.base+'/movie/%s/casts?api_key='+this.api_key,
       movie_images:               this.base+'/movie/%s/images?api_key='+this.api_key,

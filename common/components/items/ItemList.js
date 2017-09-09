@@ -50,7 +50,9 @@ class ItemList extends React.Component {
 							size={backdropSize} 
 							baseItemUrl={this.props.baseItemUrl}
 							linkTo={this.props.linkTo}
-							linkParam={this.props.linkParam} />
+							linkParam={this.props.linkParam}
+			        itemMinHeight={this.props.itemMinHeight}
+			        itemMaxHeight={this.props.itemMaxHeight}  />
 						)
 			})
 		}

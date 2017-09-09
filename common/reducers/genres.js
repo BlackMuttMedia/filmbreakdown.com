@@ -24,6 +24,10 @@ export default function genres (state = initialState, action) {
         data: action.payload,
         lastFetched: action.meta.lastFetched,
         isLoading: false}
+      case types.LOAD_GENRES_CANCEL:
+        return { ...state, 
+          isLoading: action.meta.isLoading
+        }
     case types.LOAD_GENRES_FAILURE:
       return { ...state,
         error: action.payload}

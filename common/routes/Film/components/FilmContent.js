@@ -33,9 +33,10 @@ var FilmContent = React.createClass({
 
 		if(this.props.genres)
 		{
-			var backdrops = FilmHelpers.GetBackdrops(this.props.genres, this.props.films);
-			genres = this.props.genres.toJS();
-			filmGenres = <FilmGenreSection config={this.props.config} genres={genres} backdrops={backdrops} films={this.props.films} />;
+			// console.log('GETTING BACKDROPS');
+			// console.log(this.props);
+			genres = this.props.genres;
+			filmGenres = <FilmGenreSection config={this.props.config} genres={genres} backdrops={this.props.backdrops} films={this.props.films} />;
 		}
 
 		if(this.props.creditData)

@@ -23,27 +23,21 @@ import _ from 'lodash';
 };*/
 
 export function GetBackdrop(genre, films) {
-	var genreFilms = (genre.films || {}).results || [];
-	var backdrop = null;
+	const validFilms = films ? _.filter((films.data || films), (film) => getIsValid(film, genre.id)) : []
+	const randomFilm = _.sample(validFilms)
 
-	if(genreFilms != undefined && genreFilms.length > 0)
-	{
-		var counter = 0;
-		while((backdrop == null || backdrop == "") && counter < 10000)
-		{
-			var randomNumber = _.random(genreFilms.size - 1);
-			backdrop = genreFilms[randomNumber].backdrop_path;
-			counter++;
-		}
-	}
+	return randomFilm ? randomFilm.backdrop_path : undefined
+}
 
-	return backdrop;
+export function getIsValid(film, genreId) {
+	return film && (film.backdrop_path || '').length > 0 && _.includes(film.genre_ids, genreId)
 }
 
 export function GetBackdrops(genres, films) {
 	var backdrops = [];
 
-	//console.log(genres);
+	// console.log(genres);
+	// console.log(films);
 	(genres || []).map(function(genre) {
 		var backdrop = GetBackdrop(genre, films);
 		if(backdrop)

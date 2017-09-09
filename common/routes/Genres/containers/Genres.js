@@ -21,6 +21,7 @@ const mapStateToProps = state => ({
 
 const GenresPage = ({ genres, films }) => (
 	<PageContainer>
+    { console.log('REDNERING GENRE PAGE') }
     <Helmet title='All Genres' />
     {genres.isLoading &&
       <div>
@@ -32,7 +33,9 @@ const GenresPage = ({ genres, films }) => (
 				items={getGenres(genres.data, films)} 
 				urlFormat='{1}'
 				linkTo="/genre"
-				backdrops={FilmHelpers.GetBackdrops(genres.data, films)} /> }
+				backdrops={FilmHelpers.GetBackdrops(genres.data, films)}
+        itemMinHeight={151}
+        itemMaxHeight={151} /> }
   </PageContainer>
 )
 
@@ -57,7 +60,7 @@ const getGenres = (incoming, films) => {
 	return genres
 }
 
-export default provideHooks(redial)(connect(mapStateToProps)(GenresPage))
+export default connect(mapStateToProps)(GenresPage)
 
 // This is a static page. It uses an array to hold data about the resources
 // and maintain DRY

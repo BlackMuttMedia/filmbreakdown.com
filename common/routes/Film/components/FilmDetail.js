@@ -47,6 +47,9 @@ var FilmDetailComponent = React.createClass({
 		var genres = this.props.filmGenres; // ? this.props.filmGenres.toJS() : null;
 		var credits = this.props.filmCredits ? this.props.filmCredits.toJS() : null;
 
+		console.log('FILM')
+		console.log(film)
+
 		return (
 
 		  //<!-- First Band (Image) -->

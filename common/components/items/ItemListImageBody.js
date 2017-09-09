@@ -22,7 +22,9 @@ var ItemListImageBody = React.createClass({
 	    		<div ref="mainDiv" style={divStyle}>
 			      <LabeledImage 
 			      	src={imagePath}
-			      	title={this.props.title} />
+			      	title={this.props.title}
+			        minHeight={this.props.itemMinHeight}
+			        maxHeight={this.props.itemMaxHeight}  />
 		      </div>
 		);
 	}

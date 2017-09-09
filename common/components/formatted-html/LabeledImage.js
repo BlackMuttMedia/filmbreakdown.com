@@ -8,20 +8,33 @@ var LabeledImage = React.createClass({
 			zIndex: -1,
 			borderRadius: "3px",
 			border: "solid 4px #FFFFFF",
-			maxWidth: "100%"
+			maxWidth: "100%",
+			minWidth: "100%",
+			minHeight: "100%"
 		};
+		if(this.props.maxHeight) {
+			imageStyle.maxHeight = this.props.maxHeight;
+		}
+
+		if(this.props.minHeight) {
+			imageStyle.minHeight = this.props.minHeight;
+		}
 
 		imageStyle.opacity = this.props.fullOpacity ? 1 : .6;
 
 		var divStyle = {
-			position: "relative"
+			position: "relative",
+			minWidth: "100%",
+			minHeight: "100%",
 		};
 
 		var photoStyle = {
 			backgroundColor: "rgb(70,70,70)",
 			position: "relative",
 			margin: "0 auto",
-			display: "table"
+			display: "table",
+			minWidth: '100%',
+			minHeight: "100%",
 		};
 
 		var titleStyle = {
