@@ -62,7 +62,6 @@ class TopNavComponent extends React.Component {
           <Nav pullLeft>
             <LinkContainer to='/films'><NavItem>Films</NavItem></LinkContainer>
             <LinkContainer to='/genres'><NavItem>Genres</NavItem></LinkContainer>
-            <LinkContainer to='/posts'><NavItem>Posts</NavItem></LinkContainer>
           </Nav>
         </Navbar.Collapse>
               <Reveal ref='loginReveal' revealHeader="Log In" revealContent={<LoginForm reveal={'loginReveal'} handleAuthorization={this.handleLoginAuthorization} />} />

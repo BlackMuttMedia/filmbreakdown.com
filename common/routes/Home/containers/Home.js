@@ -28,7 +28,7 @@ const Home = ({ playing, state }) => (
     <h1>Popular At Film Breakdown!</h1>
     <p>Here is where you go to look up the movies and to write about them! What movies? That is up to you! What are some of your favorites? Say what works. Say what does not. Have fun!</p>
     <p>Not sure where to start? Try looking at some of the popular items below!</p>
-    <FilmCarousel films={playing.playing} config={config} />
+    <FilmCarousel urlKey='/film/{0}-{1}' films={playing.playing} config={config} />
   </PageContainer>
 )
 

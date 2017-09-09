@@ -64,7 +64,7 @@ const getFilmGenres = (film, genres) => {
       _.map(film.data.genre_ids, (id) => _.find(genres.data, { id })) :
       []
 
-  // console.log(filmGenres)
+  console.log(filmGenres)
 
   return filmGenres
 }
