@@ -24,3 +24,28 @@ export function loadFilms () {
       })
   }
 }
+
+export function loadFilmsPage (page) {
+  return (dispatch, getState, { axios }) => {
+    const { protocol, host } = getState().sourceRequest
+    dispatch({ type: LOAD_FILMS_REQUEST })
+    return axios.get(`${protocol}://${host}/api/v0/films/page/${page}`)
+      .then(res => {
+        dispatch({
+          type: LOAD_FILMS_SUCCESS,
+          payload: res.data.results,
+          meta: {
+            lastFetched: Date.now()
+          }
+        })
+      })
+      .catch(error => {
+        console.error(`Error in reducer that handles ${LOAD_FILMS_SUCCESS}: `, error)
+        dispatch({
+          type: LOAD_FILMS_FAILURE,
+          payload: error,
+          error: true
+        })
+      })
+  }
+}

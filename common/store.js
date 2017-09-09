@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import axios from 'axios'
 import createReducer from './createReducer'
-import { loadFilms } from './routes/Films/actions'
+import { loadFilmsPage } from './routes/Films/actions'
 import { loadGenres } from './routes/Genres/actions'
 
 export function configureStore (initialState) {
@@ -24,7 +24,10 @@ export function configureStore (initialState) {
     }
   }
 
-  store.dispatch(loadFilms())
+  // Seed film & genre data
+  for(var i = 1; i < 4; i++) {
+    store.dispatch(loadFilmsPage(i))
+  }
   store.dispatch(loadGenres())
   store.asyncReducers = {}
 

@@ -17,6 +17,13 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/page/:slug', (req, res) => {
+  axios.get(util.format(tmdbUrls.misc_popular, req.params.slug))
+    .then((response) => {
+      res.status(200).json(response.data)
+    })
+})
+
 router.get('/:slug', (req, res) => {
   const id = (req.params.slug || '').substring(0, req.params.slug.indexOf('-'))
 
