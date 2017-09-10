@@ -58,3 +58,4 @@ export default function genre (state = initialState, action) {
 // Example of a co-located selector
 export const selectGenre = state => (state.genre || {})
 export const selectDescriptions = state => state.genre.descriptions
+export const selectDescriptionsLoading = state => state.genre.descriptionsLoading

@@ -3,7 +3,7 @@ import { provideHooks } from 'redial'
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
-import { selectGenre, selectDescriptions } from '../reducer'
+import { selectGenre, selectDescriptions, selectDescriptionsLoading } from '../reducer'
 import _ from 'lodash'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Background from '../../../components/formatted-html/Background'
@@ -15,7 +15,11 @@ import { selectAuth, selectIsLoggedIn, selectCurrentUser } from '../../../reduce
 import { loadGenre, loadGenreDescriptions, saveGenreDescription } from '../actions'
 
 const redial = {
-  fetch: ({ dispatch, params: { slug } }) => dispatch(loadGenre(slug))
+  fetch: ({ dispatch, params: { slug } }) => {
+    console.log('Dispatching')
+    dispatch(loadGenre(slug))
+    dispatch(loadGenreDescriptions(slug, 0, 10))
+  }
 }
 
 const mapStateToProps = state => ({
@@ -24,9 +28,10 @@ const mapStateToProps = state => ({
   isLoggedIn: selectIsLoggedIn(state),
   currentUser: selectCurrentUser,
   descriptions: selectDescriptions(state),
+  descriptionsLoading: selectDescriptionsLoading(state)
 })
 
-const GenrePage = ({ genre, auth, isLoggedIn, currentUser, descriptions, dispatch }) => (
+const GenrePage = ({ genre, auth, isLoggedIn, currentUser, descriptions, descriptionsLoading, dispatch }) => (
   <Grid>
     { !genre.isLoading && genre.data.films &&
       <Background config={genre.config} backgroundPath={(_.sample(genre.data.films.results) || {}).backdrop_path} /> }
@@ -53,6 +58,7 @@ const GenrePage = ({ genre, auth, isLoggedIn, currentUser, descriptions, dispatc
         noUserAnchorHref={''/*this.props.info.noUserAnchorHref*/} 
         noUserAnchorText={null/*this.props.info.noUserAnchorText*/}
         descriptions={ descriptions }
+        descriptionsLoading={descriptionsLoading}
         handleSubmit={(description, cb) => dispatch(saveGenreDescription(genre.data.name.toLowerCase(), description, cb))} />
     </Row>
   </Grid>

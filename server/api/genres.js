@@ -46,11 +46,10 @@ router.get('/:slug', (req, res) => {
 })
 
 router.get('/:slug/descriptions/*?', (req, res) => {
-  res.status(200).json([])
+  // res.status(200).json([])
 
   /*var genreDescriptionSchema = mongoose.model('genreDescriptions', GenreDescriptionSchema);
   const index = genres.genres.findIndex(el => el.name.toLowerCase() === req.params.slug.toLowerCase())
-  const paramsCount = req.params.length
 
   if (index < 0) {
     res.status(404).json({
@@ -60,8 +59,6 @@ router.get('/:slug/descriptions/*?', (req, res) => {
 
   const genre = genres.genres[index]
   const genre_id = genre.id
-  const start = paramsCount > 0 ? req.params[0] : 0;
-  const count = paramsCount > 1 ? req.params[1] : 10;
 
   const descriptions = genreDescriptionSchema.find({ 
   },
@@ -83,6 +80,42 @@ router.get('/:slug/descriptions/*?', (req, res) => {
       res.json({ 'success' : true, 'error' : err, 'descriptions' : (descriptions || []) });
     }
   });*/
+  axios.get(tmdbUrls.genre_list)
+  .then((response) => {
+    const genre = _.find(response.data.genres, (item) => item.name.toLowerCase().replace(' ', '-') == req.params.slug.toLowerCase().replace(' ', '-'))
+
+    if (!genre) {
+      res.status(404).json({
+        error: 'Post does not exist in db'
+      })
+    }
+
+    var genreDescriptionSchema = mongoose.model('genreDescriptions', GenreDescriptionSchema);
+    const paramsCount = req.params.length
+    const start = paramsCount > 0 ? req.params[0] : 0;
+    const count = paramsCount > 1 ? req.params[1] : 10;
+    const descriptions = genreDescriptionSchema.find({ 
+      genre_id: genre.id
+    },
+    [ 'date_added', 'description' ],
+    {
+      skip: start,
+      limit: count,
+      sort: {
+        date_added: -1
+      }
+    },
+    function(err, descriptions) {
+      if(err)
+      {
+        res.json({ 'success' : false, 'error' : err });
+      }
+      else
+      {
+        res.json({ 'success' : true, 'error' : err, 'descriptions' : (descriptions || []) });
+      }
+    });
+  })
 })
 
 router.post('/descriptions/save', (req, res) => {

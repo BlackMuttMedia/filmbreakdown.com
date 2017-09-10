@@ -1,20 +1,16 @@
 /* eslint-disable */
 var React = require('react');
 
-var GenreConversationHeader = React.createClass({
-	render: function() {
-		var headerStyle = {
-			fontWeight: 'bold',
-			fontSize: '125%',
-			paddingBottom: '10px'
-		};
+var GenreConversationHeader = ({ genrename }) => (
+	<div style={headerStyle}>
+		{genrename} Details
+	</div>
+)
 
-		return(
-			<div style={headerStyle}>
-				{this.props.genrename} Details
-			</div>
-		);
-	}
-});
+const headerStyle = {
+	fontWeight: 'bold',
+	fontSize: '125%',
+	paddingBottom: '10px'
+}
 
-module.exports = GenreConversationHeader;
+export default GenreConversationHeader;

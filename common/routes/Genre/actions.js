@@ -42,12 +42,15 @@ export function loadGenre (slug) {
   }
 }
 export function loadGenreDescriptions (slug, start, count) {
+  console.log(`Loading ${slug} descriptions`)
   return (dispatch, getState, { axios }) => {
     const { protocol, host } = getState().sourceRequest
     dispatch({ type: LOAD_GENRE_DESCRIPTIONS_REQUEST })
 
     return axios.get(`${protocol}://${host}/api/v0/genres/${slug}/descriptions/${start}/${count}`)
       .then(res => {
+        console.log('Descriptions')
+        console.log(res.data)
         dispatch({
           type: LOAD_GENRE_DESCRIPTIONS_SUCCESS,
           payload: res.data.descriptions,

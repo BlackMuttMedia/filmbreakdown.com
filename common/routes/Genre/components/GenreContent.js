@@ -2,7 +2,7 @@
 import React from 'react'
 import GenreTitle from './GenreTitle'
 import ItemList from '../../../components/items/ItemList'
-// import TabbedSidebar  from '../Sidebars/TabbedSidebar')
+import TabbedSidebar  from '../../../components/Sidebars/TabbedSidebar'
 import GenreConversationHeader from './GenreConversationHeader'
 import PostListComponent from '../../../components/post/PostListComponent'
 import { Col, Row } from 'react-bootstrap'
@@ -47,6 +47,7 @@ const GenreContent = React.createClass({
 				    		userId={this.props.userId}
 				    		noUserAnchorHref={this.props.noUserAnchorHref} 
 				    		noUserAnchorText={this.props.noUserAnchorText} 
+								loading={this.props.descriptionsLoading}
 				    		posts={descriptions}
 				    		handleSubmit={this.handleSubmit} />
 				    	<hr />
@@ -60,7 +61,7 @@ const GenreContent = React.createClass({
 	    			</Col>
 	    			<Col sm={3}>
 			    		{this.props.genre ? <GenreConversationHeader genrename={this.props.genre.name} /> : null}
-					    {/*<TabbedSidebar />*/}
+					    {this.props.genre ?  <TabbedSidebar genreName={this.props.genre.name} /> : null}
 			    	</Col>
 		    	</Row>
 		    </Col>

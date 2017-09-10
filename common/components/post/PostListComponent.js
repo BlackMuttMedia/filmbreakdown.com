@@ -24,7 +24,7 @@ var PostListComponent = React.createClass({
 			<Row>
 				<Col sm={12}>
 					{this.props.header ? <PostHeader headerContent={this.props.header} /> : null }
-					<PostList posts={this.props.posts} showSeparator={this.props.showSeparator} defaultText={this.props.defaultText} />
+					{this.props.loading ? null : <PostList posts={this.props.posts} showSeparator={this.props.showSeparator} defaultText={this.props.defaultText} /> }
 					{ this.state.showAlert ? <PostAlert alertMessage={this.state.alertMessage} alertClass={this.state.alertClass } handleClose={this.hideAlert} /> : null }
 					{ this.state.showPostBox && this.props.userToken ? <PostForm postText={this.props.postText} placeholderText={this.props.placeholderText} handlePost={this.handleSubmit} /> : null }
 					{ !(this.state.showPostBox && this.props.userToken) ? 

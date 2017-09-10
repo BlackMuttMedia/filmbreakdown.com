@@ -1,18 +1,21 @@
 /* eslint-disable */
-var React = require('react');
-var Col = require('react-bootstrap/lib/Col');
-var Row = require('react-bootstrap/lib/Row');
-var Panel = require('react-bootstrap/lib/Panel');
-var Glyphicon = require('react-bootstrap/lib/Glyphicon');
+import React from 'react'
+import Col from 'react-bootstrap/lib/Col'
+import Row from 'react-bootstrap/lib/Row'
+import Panel from 'react-bootstrap/lib/Panel'
+import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 
 var PostDisplay = React.createClass({
 	render: function(){
 		var isSidebar = this.props.sidebar && this.props.sidebar === true;
+		var fontStyle = { 
+			color: '#666666'
+		}
 
 		return (
 			<Row>
 				<Col sm={12}>
-					<Panel>
+					<Panel style={fontStyle}>
 						<Row>
 							<Col sm={12}>
 								<p>The {this.props.genreName} uses the {this.props.elementName} in such a way. It helps to communicate the fragility of fragile things 
