@@ -1,6 +1,6 @@
 /* eslint-disable */
 var React = require('react');
-var PostDisplay = require('../Post/PostDisplay');
+var PostDisplay = require('../post/PostDisplay');
 var Reveal = require('../Reveal');
 
 var ElementSummaryReveal = React.createClass({

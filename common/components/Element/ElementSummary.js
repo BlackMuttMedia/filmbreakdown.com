@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react'
-import PostDisplay from '../Post/PostDisplay'
+import PostDisplay from '../post/PostDisplay'
 import AddPlaceholder from '../PlaceHolders/AddPlaceholder'
 import Col from 'react-bootstrap/lib/Col'
 import Row from 'react-bootstrap/lib/Row'
