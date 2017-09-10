@@ -2,7 +2,7 @@
 import React from 'react'
 import GenreTitle from './GenreTitle'
 import ItemList from '../../../components/items/ItemList'
-import TabbedSidebar  from '../../../components/Sidebars/TabbedSidebar'
+import TabbedSidebar  from '../../../components/sidebars/TabbedSidebar'
 import GenreConversationHeader from './GenreConversationHeader'
 import PostListComponent from '../../../components/post/PostListComponent'
 import { Col, Row } from 'react-bootstrap'
