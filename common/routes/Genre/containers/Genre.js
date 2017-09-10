@@ -16,7 +16,6 @@ import { loadGenre, loadGenreDescriptions, saveGenreDescription } from '../actio
 
 const redial = {
   fetch: ({ dispatch, params: { slug } }) => {
-    console.log('Dispatching')
     dispatch(loadGenre(slug))
     dispatch(loadGenreDescriptions(slug, 0, 10))
   }

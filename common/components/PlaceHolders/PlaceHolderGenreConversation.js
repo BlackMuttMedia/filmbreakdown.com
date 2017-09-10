@@ -1,16 +1,13 @@
 /* eslint-disable */
-var React = require('react');
-var ElementSummaryReveal = require('../Element/ElementSummaryReveal');
-var ElementButtonList = require('../Element/ElementButtonList');
-var AddPlaceholder = require('../PlaceHolders/AddPlaceholder');
-var Reveal = require('../Reveal');
-var Col = require('react-bootstrap/lib/Col');
-var Row = require('react-bootstrap/lib/Row');
-var DropdownButton = require('react-bootstrap/lib/DropdownButton');
-var MenuItem = require('react-bootstrap/lib/MenuItem');
+import React from 'react'
+import ElementSummaryReveal from '../Element/ElementSummaryReveal'
+import ElementButtonList from '../Element/ElementButtonList'
+import AddPlaceholder from '../PlaceHolders/AddPlaceholder'
+import Reveal from '../Reveal'
+import { Col, Row, DropdownButton, MenuItem } from 'react-bootstrap'
 
-var PlaceHolderGenreConversation = React.createClass({
-	render: function() {
+class PlaceHolderGenreConversation extends React.Component {
+	render() {
 		var categoryHeaderStyle = {
 			fontWeight: 'bold'
 		};
@@ -38,11 +35,12 @@ var PlaceHolderGenreConversation = React.createClass({
 				<Reveal ref="addReveal" revealHeader="Add New Things" revealContent={this.props.addContent || addContent} />
 			</div>
 		);
-	},
-	handleAddClick: function(e) {
+	}
+
+	handleAddClick(e) {
 		this.refs.addReveal.handleClick(e);
 		e.preventDefault();
 	}
-});
+}
 
-module.exports = PlaceHolderGenreConversation;
+export default PlaceHolderGenreConversation;

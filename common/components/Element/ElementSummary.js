@@ -21,7 +21,7 @@ class ElementSummary extends React.Component {
 				<PostDisplay genreName={this.props.genreName} elementName={this.props.elementName} />
 				<Row>
 					<Col sm={12} className="text-right">
-						<a style={fontStyle} onClick={this.handleAddClick} href="#">Add more ...</a>
+						<a style={fontStyle} onClick={this.handleAddClick.bind(this)} href="#">Add more ...</a>
 					</Col>
 				</Row>
 				<Reveal ref="addReveal" revealHeader={this.props.heading || 'Add More Things'} revealContent={this.props.addContent || addContent} />

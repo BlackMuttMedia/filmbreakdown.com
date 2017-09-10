@@ -50,10 +50,8 @@ class ElementButtonList extends React.Component{
 	}
 
 	handleClick(i, e) {
-		console.log(this.props)
 		e.preventDefault()
 		var elementName = this.props.items[i]
-		console.log(elementName)
 		this.setState({ elementName: elementName, genreName: this.props.genreName }, 
 			function() { this.refs.summaryReveal.handleClick(); });
 	}

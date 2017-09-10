@@ -15,7 +15,7 @@ let tmdbUrls = init(common_config.tmdb_key).api_urls
 let genres = []
 
 export function loadGenres () {
-  console.log('LOADING GENRES!!!!')
+  // console.log('LOADING GENRES!!!!')
   return (dispatch, getState, { axios }) => {
     const { protocol, host } = getState().sourceRequest
     const genres = (getState().genres || {}).data
@@ -71,14 +71,14 @@ export function loadGenres () {
 }
 
 export function loadGenreFilms(genre, page = 1) {
-  console.log('LOADING GENRE FILMS!!!!')
+  // console.log('LOADING GENRE FILMS!!!!')
   return (dispatch, getState, { axios }) => {
     const genreId = genre.id
     const { protocol, host } = getState().sourceRequest
     const films = (getState().films || {}).data
     const backdrop = genre ? GetBackdrop(genre, films) : undefined
     if(!backdrop) {
-      console.log('Getting genre films for ' + genre.name + ' - ' + genre.id)
+      // console.log('Getting genre films for ' + genre.name + ' - ' + genre.id)
       // dispatch({ type: LOAD_FILMS_REQUEST })
       const genre_id_url = common_config.local ? `${protocol}://${host}/api/v0/genres/${genreId}/films/${page}` : format(tmdbUrls.genre_movies, genreId, 1)
       return axios.get(`${protocol}://${host}/api/v0/genres/${genreId}/films/${page}`)

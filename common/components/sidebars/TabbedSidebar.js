@@ -8,9 +8,8 @@ import Row from 'react-bootstrap/lib/Row'
 
 const TabbedSidebar = ({ genreName, elementName, panelStyle }) => (
 			<Row style={panelStyle || defaultPanelStyle}>
-				{console.log(genreName)}
 			  <TabbedSidebarItem contentItem={getElementButtonList(genreName)} heading="Elements" />
-			  <TabbedSidebarItem contentItem={postDisplay} moreContent={postMoreContent} fontStyle={fontStyle} heading="Contexts" />
+			  <TabbedSidebarItem contentItem={postDisplay} moreContent={postMoreContent(genreName, elementName)} fontStyle={fontStyle} heading="Contexts" />
 			</Row>
 )
 

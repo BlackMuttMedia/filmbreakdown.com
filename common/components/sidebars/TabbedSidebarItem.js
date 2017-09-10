@@ -1,17 +1,18 @@
 /* eslint-disable */
-var React = require('react');
-var Reveal = require('../Reveal');
-var PlaceHolderGenreConversation = require('../PlaceHolders/PlaceHolderGenreConversation');
-var AddPlaceholder = require('../PlaceHolders/AddPlaceholder');
-var Col = require('react-bootstrap/lib/Col');
-var Row = require('react-bootstrap/lib/Row');
+import React from 'react'
+import Reveal from '../Reveal'
+import PlaceHolderGenreConversation from '../PlaceHolders/PlaceHolderGenreConversation'
+import AddPlaceholder from '../PlaceHolders/AddPlaceholder'
+import ElementSummary from '../Element/ElementSummary'
+import { Col, Row } from 'react-bootstrap'
 
 
 class TabbedSidebarItem extends React.Component{
 	render() {
-		var seeMoreContent = <PlaceHolderGenreConversation />; {/* this.props.heading == 'Elements' ? 
+		var seeMoreContent = this.props.heading == 'Elements' ? 
 			<PlaceHolderGenreConversation /> :
-			<ElementSummary heading="See More" genreName="See More" elementName="Seymour" />;*/}
+			<ElementSummary heading="See More" genreName="See More" elementName="Seymour" />;
+
 		var addContent = <AddPlaceholder />;
 
 		return(
@@ -28,13 +29,13 @@ class TabbedSidebarItem extends React.Component{
 		  	</Row>
 		  	<Row>
 		  		<Col sm={6}>
-						<a href="#" onClick={this.handleAddClick}>Add ...</a>
+						<a href="#" onClick={this.handleAddClick.bind(this)}>Add ...</a>
 					</Col>
-		  		<Col sm={6} col-sm-pull="right">
-						<a href="#" onClick={this.handleMoreClick}>See More ...</a>
+		  		<Col sm={6}>
+						<a href="#" className="pull-right" onClick={this.handleMoreClick.bind(this)}>See More ...</a>
 					</Col>
-					{/* <Reveal ref="addReveal" revealHeader={this.props.addHeader || "Add More Things"} revealContent={this.props.addContent || addContent} />
-					<Reveal ref="moreReveal" revealHeader={this.props.seeMoreHeader || "See More Things"} revealContent={this.props.moreContent || seeMoreContent} /> */}
+					<Reveal ref="addReveal" revealHeader={this.props.addHeader || "Add More Things"} revealContent={this.props.addContent || addContent} />
+					<Reveal ref="moreReveal" revealHeader={this.props.seeMoreHeader || "See More Things"} revealContent={this.props.moreContent || seeMoreContent} />
 				</Row>
 		  </Col>
 		)
