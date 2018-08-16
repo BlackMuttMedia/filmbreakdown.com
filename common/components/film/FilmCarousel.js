@@ -17,17 +17,17 @@ const FilmCarousel = ({films, config, urlKey}) => (
 )
 
 const getCarouselItem = ({urlKey, film, index, config}) => (
-  <CarouselItem key={index}>
+  <Carousel.Item key={index}>
     <Link to={urlKey}>
       <div>
         {config ? <img src={ config.images.base_url + config.images.backdrop_sizes[2] + film.backdrop_path} /> : null}
-        <div className="carousel-caption">
+        <Carousel.Caption style={{ backgroundColor: 'rgba(0, 0, 0, .4)' }}>
           <h3>{film.title}</h3>
           <p>{film.overview}</p>
-        </div>
+        </Carousel.Caption>
       </div>
     </Link>
-  </CarouselItem>
+  </Carousel.Item>
 )
 
 var format = function (incoming) {
