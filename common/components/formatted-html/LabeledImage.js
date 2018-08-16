@@ -43,7 +43,8 @@ var LabeledImage = React.createClass({
 			left: '4px',
 			right: '4px',
 			padding: '0.4rem',
-		  background: 'rgba(0, 0, 0, 0.7)'
+			background: 'rgba(0, 0, 0, 0.7)',
+			color: '#FFFFFF'
 		};
 
 		return { imageStyle: imageStyle, divStyle: divStyle, titleStyle: titleStyle, photoStyle: photoStyle };
